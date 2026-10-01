@@ -16,21 +16,15 @@
  ******************************************************************************
  */
 
-#include "stm32l4xx.h"
+#include "bsp.h"
 
 int main()
 {
 	uint32_t i;
-	// Start GPIOA clock
-	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN;
-
-	// Configure PA5 (LED) as an GPIO output
-	GPIOA->MODER &= ~GPIO_MODER_MODE5_Msk; // Set MODE5 to 0X
-	GPIOA->MODER |= GPIO_MODER_MODE5_Pos; // Set MODE5 to 01 (GPIO output)
+	LED_Init();
 
 	while(1){
-		// Toggle bit 5 of the output register (PA5 / LED)
-		GPIOA->ODR ^= GPIO_ODR_OD5;
+		LED_Toggle();
 
 		// Wait
 		for (i = 0; i < 100000; i++) {};
