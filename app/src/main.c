@@ -20,13 +20,15 @@
 
 int main()
 {
-	uint32_t i;
+	SystemCoreClockUpdate();
 	LED_Init();
-
+	Button_Init();
 	while(1){
-		LED_Toggle();
-
-		// Wait
-		for (i = 0; i < 100000; i++) {};
+		if (Button_Get_State() == 1) {
+			LED_On();
+		}
+		else {
+			LED_Off();
+		}
 	}
 }

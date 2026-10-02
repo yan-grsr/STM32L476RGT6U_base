@@ -15,4 +15,7 @@ void LED_Toggle(void);
 void LED_On(void);
 void LED_Off(void);
 
+void Button_Init(void);
+uint8_t Button_Get_State(void);
+
 #endif /* INC_BSP_H_ */
