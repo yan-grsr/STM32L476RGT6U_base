@@ -18,4 +18,7 @@ void LED_Off(void);
 void Button_Init(void);
 uint8_t Button_Get_State(void);
 
+
+void USART2_Init(void);
+
 #endif /* INC_BSP_H_ */

@@ -15,20 +15,42 @@
  *
  ******************************************************************************
  */
-
+#include "main.h"
 #include "bsp.h"
 
 int main()
 {
 	SystemCoreClockUpdate();
+	uint8_t	i, sent = 0;
+	// Initialize LED & Button pin
 	LED_Init();
 	Button_Init();
-	while(1){
-		if (Button_Get_State() == 1) {
-			LED_On();
+
+	// Initialize Debug Console
+	USART2_Init();
+	my_printf("Console ready!\r\n");
+	// Main loop
+	while(1)
+	{
+		// If User-Button is pushed down
+		if (Button_Get_State() == 1)
+		{
+			LED_On();	// Keep LED On
+
+			// Send '#' only once
+			if (sent == 0)
+			{
+				my_printf("Console ready!\r\n");
+				my_printf("#%d\r\n", i);
+				sent = 1;
+				i++;
+			}
 		}
-		else {
-			LED_Off();
+		// If User-Button is released
+		else
+		{
+			LED_Off();	// Keep LED Off
+			sent = 0;
 		}
 	}
 }
