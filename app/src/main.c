@@ -34,8 +34,31 @@ int main()
 
 	// Start I2C transaction
 	I2C3->CR2 |= I2C_CR2_START;
+
+	uint8_t	i, sent = 0;
+
 	// Main loop
 	while(1)
 	{
+		// If User-Button is pushed down
+		if (Button_Get_State() == 1)
+		{
+			LED_On();	// Keep LED On
+
+			// Send '#' only once
+			if (sent == 0)
+			{
+				my_printf("Console ready!\r\n");
+				my_printf("#%d\r\n", i);
+				sent = 1;
+				i++;
+			}
+		}
+		// If User-Button is released
+		else
+		{
+			LED_Off();	// Keep LED Off
+			sent = 0;
+		}
 	}
 }
