@@ -21,7 +21,6 @@
 int main()
 {
 	SystemCoreClockUpdate();
-	uint8_t	i, sent = 0;
 	// Initialize LED & Button pin
 	LED_Init();
 	Button_Init();
@@ -29,28 +28,14 @@ int main()
 	// Initialize Debug Console
 	USART2_Init();
 	my_printf("Console ready!\r\n");
+	my_printf("SYSCLK = %d Hz\r\n", SystemCoreClock);
+
+	I2C3_Init();
+
+	// Start I2C transaction
+	I2C3->CR2 |= I2C_CR2_START;
 	// Main loop
 	while(1)
 	{
-		// If User-Button is pushed down
-		if (Button_Get_State() == 1)
-		{
-			LED_On();	// Keep LED On
-
-			// Send '#' only once
-			if (sent == 0)
-			{
-				my_printf("Console ready!\r\n");
-				my_printf("#%d\r\n", i);
-				sent = 1;
-				i++;
-			}
-		}
-		// If User-Button is released
-		else
-		{
-			LED_Off();	// Keep LED Off
-			sent = 0;
-		}
 	}
 }
